@@ -1,1 +1,0 @@
-# adilkananarbekov.github.io
