@@ -48,6 +48,16 @@ body {
   letter-spacing: 0.01em;
 }
 
+::selection {
+  background: #7bff9e;
+  color: #000;
+}
+
+::-moz-selection {
+  background: #7bff9e;
+  color: #000;
+}
+
 img {
   max-width: 100%;
   display: block;
@@ -327,6 +337,7 @@ body.nav-hidden .site-header {
   background: radial-gradient(circle at 10% 20%, rgba(54, 245, 255, 0.18), transparent 45%),
     radial-gradient(circle at 80% 30%, rgba(255, 107, 74, 0.18), transparent 50%),
     linear-gradient(120deg, rgba(0, 0, 0, 0.92), rgba(5, 7, 10, 0.96));
+  user-select: none;
 }
 
 .hero::before {
@@ -684,6 +695,11 @@ body.nav-hidden .site-header {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+  user-select: none;
+}
+
+.skills-grid * {
+  user-select: none;
 }
 
 .skill-pill {
