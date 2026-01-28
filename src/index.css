@@ -1340,6 +1340,12 @@ footer {
     padding: calc(var(--header-offset) + 40px) 0 80px;
   }
 
+
+  /* Lock 3D interaction on mobile to ensure scrolling works */
+  .hero-canvas {
+    pointer-events: none;
+  }
+
   .nav-bar {
     flex-direction: column;
     align-items: flex-start;
