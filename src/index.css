@@ -1328,6 +1328,11 @@ footer {
     flex-direction: column;
     align-items: flex-start;
   }
+
+  .hero-canvas,
+  .hero-canvas * {
+    pointer-events: none !important;
+  }
 }
 
 @media (max-width: 720px) {
