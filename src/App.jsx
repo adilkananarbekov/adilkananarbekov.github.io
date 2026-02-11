@@ -619,7 +619,7 @@ export default function App() {
                 <article className="project-card" key={project.title}>
                   <div className="project-head">
                     <h3>{project.title}</h3>
-                    <a className="project-link" href={project.link} target="_blank" rel="noopener">
+                    <a className="project-link" href={project.link} target="_blank" rel="noopener noreferrer">
                       GitHub
                     </a>
                   </div>
@@ -726,7 +726,7 @@ export default function App() {
                     className="btn btn-ghost"
                     href="https://t.me/Adilkan_07"
                     target="_blank"
-                    rel="noopener"
+                    rel="noopener noreferrer"
                   >
                     Telegram
                   </a>
@@ -752,7 +752,7 @@ export default function App() {
                           className="contact-value"
                           href={contact.href}
                           target={contact.href.startsWith("http") ? "_blank" : undefined}
-                          rel="noopener"
+                          rel="noopener noreferrer"
                         >
                           {contact.value}
                         </a>
@@ -761,7 +761,7 @@ export default function App() {
                             className="contact-sub"
                             href={contact.extra.href}
                             target="_blank"
-                            rel="noopener"
+                            rel="noopener noreferrer"
                           >
                             {contact.extra.value}
                           </a>
