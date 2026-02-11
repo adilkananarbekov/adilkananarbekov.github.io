@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, memo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, OrbitControls, Sparkles } from "@react-three/drei";
 import * as THREE from "three";
@@ -235,7 +235,7 @@ function PulseRing() {
   );
 }
 
-function HeroScene() {
+const HeroScene = memo(function HeroScene() {
   return (
     <Canvas camera={{ position: [0, 0.4, 5.5], fov: 50 }} dpr={[1, 1.6]}>
       <color attach="background" args={["#050608"]} />
@@ -252,19 +252,19 @@ function HeroScene() {
       <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.6} />
     </Canvas>
   );
-}
+});
 
 export default function App() {
-  const [theme, setTheme] = useState("dark");
-  const [time, setTime] = useState("");
-  const [typed, setTyped] = useState("");
-  const audioRef = useRef(null);
   const reduceMotion = useMemo(
     () =>
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches,
     []
   );
+  const [theme, setTheme] = useState("dark");
+  const [time, setTime] = useState("");
+  const [typed, setTyped] = useState(reduceMotion ? "Secure session established." : "");
+  const audioRef = useRef(null);
 
   useEffect(() => {
     document.body.dataset.theme = theme;
@@ -283,7 +283,6 @@ export default function App() {
 
   useEffect(() => {
     if (reduceMotion) {
-      setTyped("Secure session established.");
       return;
     }
     const lines = [
