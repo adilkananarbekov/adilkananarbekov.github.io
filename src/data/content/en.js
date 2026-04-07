@@ -395,7 +395,6 @@ export const enPortfolio = {
   footerBlock: {
     exploreTitle: "Explore",
     connectTitle: "On the web",
-    rights: "© 2026 Adilkan Anarbekov. All rights reserved.",
-    colophon: "React · Vite · GitHub Pages"
+    rights: "© 2026 Adilkan Anarbekov. All rights reserved."
   }
 };

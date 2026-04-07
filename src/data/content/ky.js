@@ -396,6 +396,5 @@ export const kyPortfolio = {
     exploreTitle: "Бөлүмдөр",
     connectTitle: "Тармактар",
     rights: "© 2026 Адилкан Анарбеков. Бардык укуктар корголгон.",
-    colophon: "React · Vite · GitHub Pages"
   }
 };

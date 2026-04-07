@@ -396,6 +396,5 @@ export const ruPortfolio = {
     exploreTitle: "Разделы",
     connectTitle: "Соцсети и ссылки",
     rights: "© 2026 Адилкан Анарбеков. Все права защищены.",
-    colophon: "React · Vite · GitHub Pages"
   }
 };
