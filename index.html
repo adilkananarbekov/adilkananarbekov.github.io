@@ -26,12 +26,181 @@
     <meta name="twitter:description" content="Мобильные приложения, редизайн интерфейсов, motion-подача и презентационные сайты." />
     <meta name="twitter:image" content="https://adilkan.com/assets/cat.svg" />
     <title>Адилкан Анарбеков | Мобильные приложения и дизайн</title>
-    <script type="module" crossorigin src="/assets/index-CUmQZnnF.js"></script>
+    <style>
+      #app-splash {
+        position: fixed;
+        inset: 0;
+        z-index: 100000;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        background: radial-gradient(ellipse 120% 80% at 50% -20%, rgba(30, 99, 255, 0.22), transparent 55%),
+          radial-gradient(ellipse 70% 50% at 100% 60%, rgba(17, 163, 107, 0.12), transparent 45%),
+          linear-gradient(180deg, #05070f 0%, #0a0f1e 42%, #0e1526 100%);
+        color: rgba(255, 255, 255, 0.88);
+        font-family: system-ui, "Segoe UI", Roboto, sans-serif;
+        transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.55s step-end;
+      }
+      #app-splash .splash-card {
+        display: grid;
+        gap: 22px;
+        justify-items: center;
+        width: min(320px, 100%);
+      }
+      #app-splash .splash-track {
+        position: relative;
+        width: min(280px, 78vw);
+        height: 6px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.08);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+        overflow: visible;
+      }
+      #app-splash .splash-shimmer {
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(30, 99, 255, 0.45) 40%,
+          rgba(17, 163, 107, 0.35) 60%,
+          transparent
+        );
+        background-size: 200% 100%;
+        animation: splash-shimmer 1.35s ease-in-out infinite;
+        opacity: 0.85;
+      }
+      @keyframes splash-shimmer {
+        0% {
+          background-position: 120% 0;
+        }
+        100% {
+          background-position: -120% 0;
+        }
+      }
+      #app-splash .splash-cat-runner {
+        position: absolute;
+        left: 0;
+        bottom: 10px;
+        width: 56px;
+        height: 40px;
+        color: #e8eeff;
+        filter: drop-shadow(0 6px 14px rgba(30, 99, 255, 0.35));
+        animation: splash-cat-run 2.1s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+        transform-origin: 50% 100%;
+      }
+      @keyframes splash-cat-run {
+        0% {
+          left: 0;
+          transform: translateY(0) scaleX(1);
+        }
+        12% {
+          left: 18%;
+          transform: translateY(-4px) scaleX(1);
+        }
+        45% {
+          left: calc(100% - 56px);
+          transform: translateY(0) scaleX(1);
+        }
+        50% {
+          left: calc(100% - 56px);
+          transform: translateY(-2px) scaleX(-1);
+        }
+        62% {
+          left: 22%;
+          transform: translateY(-4px) scaleX(-1);
+        }
+        95% {
+          left: 0;
+          transform: translateY(0) scaleX(-1);
+        }
+        100% {
+          left: 0;
+          transform: translateY(0) scaleX(1);
+        }
+      }
+      #app-splash .splash-cat-svg {
+        display: block;
+        width: 56px;
+        height: auto;
+      }
+      #app-splash .splash-paw-front {
+        transform-origin: center;
+        animation: splash-paw 0.35s ease-in-out infinite alternate;
+      }
+      #app-splash .splash-paw-back {
+        transform-origin: center;
+        animation: splash-paw 0.35s ease-in-out infinite alternate-reverse;
+      }
+      @keyframes splash-paw {
+        from {
+          transform: translateY(0);
+        }
+        to {
+          transform: translateY(2px);
+        }
+      }
+      #app-splash .splash-label {
+        margin: 0;
+        font-size: 0.82rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgba(180, 210, 255, 0.72);
+      }
+      body.app-ready #app-splash {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #app-splash .splash-shimmer,
+        #app-splash .splash-cat-runner,
+        #app-splash .splash-paw-front,
+        #app-splash .splash-paw-back {
+          animation: none !important;
+        }
+        #app-splash .splash-cat-runner {
+          left: 50%;
+          margin-left: -28px;
+          transform: none;
+        }
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/index-We7VKV19.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/vendor-7OC5HNn7.js">
     <link rel="modulepreload" crossorigin href="/assets/react-vendor-lmzd-x2s.js">
-    <link rel="stylesheet" crossorigin href="/assets/index-zWz7zwBy.css">
+    <link rel="stylesheet" crossorigin href="/assets/index-BsuE5QUf.css">
   </head>
   <body>
+    <div id="app-splash" role="status" aria-live="polite" aria-busy="true">
+      <div class="splash-card">
+        <div class="splash-track" aria-hidden="true">
+          <div class="splash-shimmer"></div>
+          <div class="splash-cat-runner">
+            <svg class="splash-cat-svg" viewBox="0 0 88 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <g fill="currentColor">
+                <ellipse cx="34" cy="30" rx="24" ry="15" opacity="0.95" />
+                <circle cx="58" cy="22" r="15" />
+                <path d="M48 8 L54 17 L45 14 Z" />
+                <path d="M60 6 L67 16 L57 13 Z" />
+                <path
+                  d="M12 26 Q4 18 6 34"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="5"
+                  stroke-linecap="round"
+                />
+                <ellipse class="splash-paw-back" cx="26" cy="40" rx="6" ry="4" opacity="0.9" />
+                <ellipse class="splash-paw-front" cx="44" cy="41" rx="6" ry="4" opacity="0.9" />
+              </g>
+            </svg>
+          </div>
+        </div>
+        <p class="splash-label">Загрузка…</p>
+      </div>
+    </div>
     <div id="root"></div>
   </body>
 </html>
