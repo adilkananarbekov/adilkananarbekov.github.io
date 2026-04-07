@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local design exports (not part of the live site)
+Premium Portfolio Website Design.zip
+_design_import/

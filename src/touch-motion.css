@@ -1,0 +1,655 @@
+.scroll-progress {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 2400;
+  height: 3px;
+  transform: scaleX(var(--scroll-progress, 0));
+  transform-origin: left center;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+  box-shadow: 0 0 24px rgba(137, 168, 248, 0.28);
+  pointer-events: none;
+}
+
+.hero-canvas-fallback {
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(circle at 28% 34%, rgba(137, 168, 248, 0.18), transparent 20%),
+    radial-gradient(circle at 72% 62%, rgba(217, 169, 93, 0.16), transparent 22%),
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.04), transparent 42%);
+  animation: hero-canvas-breathe 8s ease-in-out infinite alternate;
+}
+
+.animated-icon {
+  display: inline-grid;
+  place-items: center;
+  line-height: 0;
+  color: currentColor;
+}
+
+.animated-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.hero-signals {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.hero-signal-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+  padding: 16px 18px;
+  min-height: 108px;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)) padding-box,
+    linear-gradient(135deg, rgba(240, 201, 141, 0.22), rgba(137, 168, 248, 0.18)) border-box;
+  border: 1px solid transparent;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+}
+
+.hero-signal-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top right, rgba(137, 168, 248, 0.12), transparent 46%),
+    linear-gradient(140deg, rgba(217, 169, 93, 0.08), transparent 52%);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.hero-signal-icon,
+.service-card__icon-shell,
+.contact-icon-shell {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 18px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero-signal-icon {
+  width: 56px;
+  height: 56px;
+  color: var(--accent-2);
+  background: linear-gradient(135deg, rgba(137, 168, 248, 0.12), rgba(255, 255, 255, 0.06));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.hero-signal-icon::after,
+.service-card__icon-shell::after,
+.contact-icon-shell::after {
+  content: "";
+  position: absolute;
+  inset: -25%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.18), transparent 60%);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.hero-signal-icon .animated-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.hero-signal-copy {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+.hero-signal-title {
+  font-family: "Sora", sans-serif;
+  font-size: 0.92rem;
+  color: var(--text);
+}
+
+.hero-signal-text {
+  color: rgba(245, 239, 229, 0.68);
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.service-card {
+  display: grid;
+  align-content: start;
+  gap: 18px;
+}
+
+.service-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.service-card__icon-shell {
+  width: 62px;
+  height: 62px;
+  color: var(--accent);
+  background:
+    linear-gradient(135deg, rgba(240, 201, 141, 0.12), rgba(255, 255, 255, 0.06)),
+    rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.service-card__icon-shell--compass {
+  color: var(--accent-2);
+}
+
+.service-card__icon-shell--document {
+  color: var(--accent-3);
+}
+
+.service-card__icon {
+  width: 34px;
+  height: 34px;
+}
+
+.contact-icon-shell {
+  width: 52px;
+  height: 52px;
+  flex: 0 0 auto;
+  color: var(--accent-2);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.contact-icon-shell--phone {
+  color: var(--accent);
+}
+
+.contact-icon-shell--email {
+  color: var(--accent-2);
+}
+
+.contact-icon-shell--github {
+  color: var(--text);
+}
+
+.contact-icon-shell .animated-icon,
+.contact-icon-shell .icon {
+  width: 26px;
+  height: 26px;
+}
+
+.project-preview-signal {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 1;
+  display: inline-grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 18px;
+  color: var(--accent-2);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 16px 30px rgba(3, 8, 14, 0.18);
+  backdrop-filter: blur(12px);
+}
+
+.project-preview-signal--cellphone {
+  color: var(--accent);
+}
+
+.project-preview-signal--chat {
+  color: var(--accent-2);
+}
+
+.project-preview-signal .animated-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.floating-telegram__icon-shell {
+  position: relative;
+  overflow: hidden;
+}
+
+.floating-telegram__motion {
+  width: 30px;
+  height: 30px;
+  color: var(--accent-2);
+  opacity: 0.92;
+}
+
+.floating-telegram__brand {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #2aabee;
+  box-shadow: 0 0 0 4px rgba(20, 24, 30, 0.22);
+}
+
+.app.theme-light .floating-telegram__brand {
+  box-shadow: 0 0 0 4px rgba(255, 251, 245, 0.7);
+}
+
+.app.theme-light .hero-signal-card {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.74)) padding-box,
+    linear-gradient(135deg, rgba(192, 127, 46, 0.18), rgba(52, 126, 208, 0.14)) border-box;
+}
+
+.app.theme-light .hero-signal-text {
+  color: rgba(32, 40, 51, 0.68);
+}
+
+.app.theme-light .service-card__icon-shell,
+.app.theme-light .contact-icon-shell {
+  background: rgba(255, 255, 255, 0.76);
+  border-color: rgba(31, 41, 55, 0.08);
+}
+
+.app.theme-light .project-preview-signal {
+  background: rgba(255, 255, 255, 0.82);
+  border-color: rgba(31, 41, 55, 0.08);
+}
+
+body {
+  overflow-x: clip;
+}
+
+.hero-grid,
+.hero-copy,
+.hero-console,
+.hero-actions,
+.hero-signals,
+.hero-signal-card,
+.hero-signal-copy,
+.section-header,
+.motion-card,
+.motion-card-copy,
+.service-card,
+.project-card,
+.project-head,
+.project-preview-grid,
+.project-preview-chip,
+.experience-dashboard,
+.experience-dashboard-copy,
+.experience-interaction-card,
+.experience-badges,
+.experience-mode-switch,
+.experience-bar-head,
+.contact-grid,
+.contact-panel,
+.contact-list-panel,
+.contact-item,
+.contact-meta,
+.ops-card,
+.stat-card {
+  min-width: 0;
+}
+
+.hero-title,
+.section-header h2,
+.motion-card h3,
+.service-card h3,
+.project-head h3,
+.experience-title,
+.contact-panel h3,
+.ops-card h3,
+.card h3 {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.hero-subtitle,
+.hero-signal-text,
+.motion-card-copy p,
+.service-card p,
+.project-desc,
+.experience-dashboard-copy p,
+.contact-panel p,
+.console-line span:last-child,
+.about-list li,
+.project-list li {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.btn,
+.status-pill,
+.hero-chip,
+.tag,
+.ops-tags span,
+.contact-badges span,
+.hero-marquee-item,
+.motion-token,
+.experience-rail-item,
+.experience-orbit-tag,
+.project-preview-chip,
+.project-preview-tag,
+.contact-label,
+.contact-sub,
+.motion-label,
+.card-index,
+.console-label,
+.experience-live,
+.experience-ring-label {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.app.is-performance-lite {
+  --nav-blur: 0px;
+}
+
+.app.is-performance-lite::before,
+.app.is-performance-lite .matrix-layer,
+.app.is-performance-lite .hero::after,
+.app.is-performance-lite .hero-console::after,
+.app.is-performance-lite .hero-marquee-track,
+.app.is-performance-lite .motion-track,
+.app.is-performance-lite .motion-beam,
+.app.is-performance-lite .motion-flow-chip,
+.app.is-performance-lite .motion-orbit-chip,
+.app.is-performance-lite .motion-stack-layer,
+.app.is-performance-lite .experience-track,
+.app.is-performance-lite .experience-orbit-tag,
+.app.is-performance-lite .experience-bar-fill,
+.app.is-performance-lite .project-preview-chip,
+.app.is-performance-lite .holiday-path--pulse,
+.app.is-performance-lite .floating-telegram__glow,
+.app.is-performance-lite .hero-canvas-fallback {
+  animation: none !important;
+}
+
+.app.is-performance-lite .particle-field {
+  opacity: 0.35;
+}
+
+.app.is-performance-lite .site-stage {
+  will-change: auto;
+}
+
+.app.is-performance-lite .site-header,
+.app.is-performance-lite .status-bar,
+.app.is-performance-lite .nav-bar,
+.app.is-performance-lite .hero-signal-card,
+.app.is-performance-lite .hero-console,
+.app.is-performance-lite .motion-card,
+.app.is-performance-lite .service-card,
+.app.is-performance-lite .project-card,
+.app.is-performance-lite .ops-card,
+.app.is-performance-lite .contact-panel,
+.app.is-performance-lite .contact-list-panel,
+.app.is-performance-lite .experience-dashboard,
+.app.is-performance-lite .experience-orbit-card,
+.app.is-performance-lite .experience-interaction-card,
+.app.is-performance-lite .project-preview-signal,
+.app.is-performance-lite .floating-telegram {
+  backdrop-filter: none !important;
+}
+
+.app.is-performance-lite .glitch-lines {
+  opacity: 0.03;
+}
+
+.app.is-performance-lite .hero-marquee,
+.app.is-performance-lite .motion-ticker,
+.app.is-performance-lite .experience-rail {
+  mask-image: none;
+}
+
+.btn,
+.theme-button,
+.lang-button,
+.section-card,
+.contact-item,
+.floating-telegram,
+.experience-mode-button,
+.experience-press-pad,
+.stat-card {
+  transform: translateZ(0);
+}
+
+@media (pointer: coarse) {
+  .btn,
+  .theme-button,
+  .lang-button,
+  .section-card,
+  .contact-item,
+  .floating-telegram,
+  .experience-mode-button,
+  .experience-press-pad,
+  .stat-card {
+    position: relative;
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .btn::after,
+  .theme-button::after,
+  .lang-button::after,
+  .contact-item::before,
+  .floating-telegram::after,
+  .experience-mode-button::after,
+  .experience-press-pad::after {
+    content: "";
+    position: absolute;
+    left: var(--tap-x, 50%);
+    top: var(--tap-y, 50%);
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0) 72%);
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.2);
+    pointer-events: none;
+  }
+
+  .btn.is-touch-pressed::after,
+  .theme-button.is-touch-pressed::after,
+  .lang-button.is-touch-pressed::after,
+  .contact-item.is-touch-pressed::before,
+  .floating-telegram.is-touch-pressed::after,
+  .experience-mode-button.is-touch-pressed::after,
+  .experience-press-pad.is-touch-pressed::after {
+    animation: touch-ripple 0.52s ease-out forwards;
+  }
+
+  .section-card.is-touch-pressed,
+  .contact-item.is-touch-pressed,
+  .floating-telegram.is-touch-pressed,
+  .stat-card.is-touch-pressed {
+    transform: translateY(1px) scale(0.995);
+  }
+
+  .section-card.is-scroll-active,
+  .contact-item.is-scroll-active,
+  .stat-card.is-scroll-active {
+    transform: translateY(-4px);
+    border-color: rgba(137, 168, 248, 0.16);
+    box-shadow: 0 24px 48px rgba(3, 8, 14, 0.28);
+  }
+
+  .app::before {
+    animation-duration: 30s;
+  }
+
+  .hero-signals {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 980px) {
+  .btn,
+  .status-pill,
+  .hero-chip,
+  .tag,
+  .ops-tags span,
+  .contact-badges span,
+  .motion-label,
+  .card-index,
+  .hero-marquee-item,
+  .motion-token,
+  .experience-rail-item,
+  .experience-orbit-tag,
+  .project-preview-chip,
+  .project-preview-tag {
+    white-space: normal;
+    text-align: center;
+    line-height: 1.35;
+  }
+
+  .console-line {
+    grid-template-columns: 1fr;
+  }
+
+  .project-head {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .hero-signals {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .scroll-progress {
+    height: 2px;
+  }
+
+  .hero-signals {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-signal-card {
+    min-height: 96px;
+    padding: 14px 16px;
+  }
+
+  .hero-signal-text {
+    font-size: 0.8rem;
+  }
+
+  .status-pill,
+  .hero-chip,
+  .motion-label,
+  .card-index,
+  .console-label,
+  .contact-label,
+  .contact-sub,
+  .experience-live,
+  .experience-ring-label,
+  .project-link {
+    letter-spacing: 0.08em;
+  }
+
+  .hero-title,
+  .section-header h2,
+  .experience-title,
+  .motion-card h3,
+  .service-card h3,
+  .project-head h3,
+  .ops-card h3,
+  .contact-panel h3,
+  .card h3 {
+    text-wrap: balance;
+  }
+
+  .service-card__icon-shell {
+    width: 56px;
+    height: 56px;
+  }
+
+  .service-card__icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .contact-icon-shell {
+    width: 46px;
+    height: 46px;
+  }
+
+  .contact-icon-shell .animated-icon,
+  .contact-icon-shell .icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .project-preview-signal {
+    width: 48px;
+    height: 48px;
+  }
+
+  .project-preview-signal .animated-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .project-preview-chip,
+  .hero-marquee-item,
+  .motion-token,
+  .experience-rail-item,
+  .experience-orbit-tag {
+    justify-content: center;
+    min-height: 44px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress,
+  .hero-canvas-fallback {
+    animation: none !important;
+  }
+}
+
+@keyframes touch-ripple {
+  0% {
+    opacity: 0.72;
+    transform: translate(-50%, -50%) scale(0.2);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(10);
+  }
+}
+
+@keyframes hero-canvas-breathe {
+  0% {
+    filter: saturate(1);
+    transform: scale(1);
+  }
+
+  100% {
+    filter: saturate(1.08);
+    transform: scale(1.04);
+  }
+}
+
+@supports (content-visibility: auto) {
+  @media (max-width: 820px) {
+    main > section:not(.hero),
+    .holiday-divider,
+    footer {
+      content-visibility: auto;
+      contain-intrinsic-size: 780px;
+    }
+  }
+}
