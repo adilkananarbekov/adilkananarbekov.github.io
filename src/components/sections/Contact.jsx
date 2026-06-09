@@ -35,7 +35,7 @@ export default function Contact({ content }) {
               </a>
               <a
                 className="btn btn-ghost"
-                href="https://wa.me/9965599987999"
+                href="https://wa.me/996559987999"
                 target="_blank"
                 rel="noopener"
               >

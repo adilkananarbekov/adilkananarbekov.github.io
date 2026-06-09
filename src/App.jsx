@@ -1,9 +1,11 @@
-import { startTransition, useEffect, useState } from "react";
+import { startTransition, useEffect, useMemo, useRef, useState } from "react";
 import portrait from "./assets/portrait-optimized.jpg";
 import { portfolioContent } from "./data/portfolioData";
+import { trackGenerateLead } from "./analytics.js";
+import { ScrollStoryRail } from "./components/ui/ScrollStoryRail.jsx";
+import StoryScrollStage from "./components/3d/StoryScrollStage.jsx";
 
 const languageOptions = [
-  { key: "ky", label: "KG" },
   { key: "ru", label: "RU" },
   { key: "en", label: "EN" }
 ];
@@ -38,7 +40,7 @@ const signalBadgeMap = {
 };
 
 function normalizeLanguage(value) {
-  if (value === "kg") return "ky";
+  if (value === "kg" || value === "ky") return "ru";
   return value;
 }
 
@@ -51,7 +53,6 @@ function getInitialLanguage() {
   }
 
   const browserLanguage = window.navigator.language.toLowerCase();
-  if (browserLanguage.startsWith("ky")) return "ky";
   if (browserLanguage.startsWith("en")) return "en";
   return "ru";
 }
@@ -71,10 +72,6 @@ const portraitHintMap = {
     desktop: "Наведите на портрет, чтобы открыть alternate look",
     touch: "Нажмите на портрет, чтобы открыть alternate look"
   },
-  ky: {
-    desktop: "Портретке курсорду алып барып alternate look ачыңыз",
-    touch: "Портретти басып alternate look ачыңыз"
-  },
   en: {
     desktop: "Hover portrait to reveal alternate look",
     touch: "Tap portrait to reveal alternate look"
@@ -84,134 +81,87 @@ const portraitHintMap = {
 const supplementalCopy = {
   ru: {
     introGate: {
-      eyebrow: "Motion · UI · Продукт",
+      eyebrow: "Creative developer · Portfolio story",
       enter: "Войти",
       hint: "Клик или пробел · Esc — пропуск"
     },
+    storyRail: { top: "Старт", navLabel: "Навигация по секциям" },
     quick: {
       eyebrow: "Quick Scan",
-      title: "Вместо лишнего текста: быстрые факты о формате работы.",
-      description:
-        "Клиент должен понять предложение за несколько секунд: что вы делаете, в каком формате и как быстро можно начать диалог.",
+      title: "Быстрый скан вместо длинного текста.",
+      description: "Что делаю, как работаю и где написать.",
       metrics: {
         services: "Формата работы",
         servicesText: "Разработка, редизайн и презентационная digital-подача.",
         projects: "Выделенных кейса",
-        projectsText: "С понятным стеком, сценарием и пользой для клиента.",
+        projectsText: "Язык, туризм, travel и personal brand.",
         contacts: "Прямых канала",
-        contactsText: "Можно написать туда, где клиенту реально удобно.",
+        contactsText: "Telegram, GitHub и LinkedIn без лишнего шума.",
         languages: "Языки сайта",
-        languagesText: "Подача сразу под несколько аудиторий."
+        languagesText: "RU/EN без лишнего переключателя."
       }
     },
     signal: {
       eyebrow: "Client Signal",
-      title: "Сайт должен отвечать на вопросы клиента еще до первого сообщения.",
-      description:
-        "Поэтому между основными секциями здесь есть не просто декоративные вставки, а короткие блоки с выгодой, форматом и результатом.",
+      title: "Клиент должен понять формат до первого сообщения.",
+      description: "Короткие сигналы: формат, подача, процесс, результат.",
       boardTitle: "Что считывается сразу",
       boardRows: [
         { label: "Формат", value: "Мобильный продукт, редизайн или presentation site." },
         { label: "Подача", value: "Motion и depth усиливают доверие, а не отвлекают." },
-        { label: "Процесс", value: "Работа идет поэтапно, с понятными апдейтами и фокусом." },
-        { label: "Результат", value: "Клиент видит не просто экран, а готовое предложение." }
+        { label: "Процесс", value: "Поэтапно, с понятными апдейтами." },
+        { label: "Результат", value: "Не просто экран, а готовое предложение." }
       ],
       deliverTitle: "Что получает клиент",
       deliverText:
-        "Каждое направление превращается в конкретный deliverable, а не в абстрактное описание.",
+        "Каждое направление превращается в конкретный deliverable.",
       memoryTitle: "Почему это запоминается",
       memoryPoints: [
-        "Межсекционные animated-блоки делают сайт похожим на презентацию, а не на визитку.",
-        "Ключевая информация подается короткими signal-cards вместо длинной стены текста.",
-        "Desktop и touch-сценарии ощущаются как продуманный product experience."
-      ]
-    }
-  },
-  ky: {
-    introGate: {
-      eyebrow: "Motion · UI · Продукт",
-      enter: "Кирүү",
-      hint: "Баскыч же пробел · Esc — өткөрүү"
-    },
-    quick: {
-      eyebrow: "Quick Scan",
-      title: "Ашыкча тексттин ордуна: иш форматы боюнча тез фактылар.",
-      description:
-        "Кардар бир нече секундда эле сиз эмне кылаарыңызды, кандай форматта иштей турганыңызды жана кантип байланышса болорун түшүнүшү керек.",
-      metrics: {
-        services: "Иш форматы",
-        servicesText: "Иштеп чыгуу, редизайн жана presentation-подача.",
-        projects: "Тандалган кейс",
-        projectsText: "Стек, сценарий жана пайдалуу жыйынтык менен.",
-        contacts: "Түз канал",
-        contactsText: "Кардар өзү каалаган жерден жаза алат.",
-        languages: "Сайт тилдери",
-        languagesText: "Бир нече аудитория үчүн дароо даяр."
-      }
-    },
-    signal: {
-      eyebrow: "Client Signal",
-      title: "Сайт кардардын суроолоруна биринчи билдирүүдөн мурда жооп бериши керек.",
-      description:
-        "Ошондуктан секциялардын ортосунда жөн гана декор эмес, формат, пайда жана жыйынтыкты көрсөткөн блоктор кошулду.",
-      boardTitle: "Дароо көрүнгөн нерсе",
-      boardRows: [
-        { label: "Формат", value: "Мобилдик продукт, редизайн же presentation site." },
-        { label: "Подача", value: "Motion менен тереңдик ишенимди күчөтөт." },
-        { label: "Процесс", value: "Иш этап-этабы менен, так жаңыртуулар менен жүрөт." },
-        { label: "Жыйынтык", value: "Кардар жөн гана экран эмес, даяр сунушту көрөт." }
-      ],
-      deliverTitle: "Кардар эмнени алат",
-      deliverText:
-        "Ар бир багыт конкреттүү deliverable болуп көрүнөт, жөн гана абстракттуу сүрөттөмө эмес.",
-      memoryTitle: "Эмне үчүн эсте калат",
-      memoryPoints: [
-        "Animated interstitial-блоктор сайтты визиткадан көрө презентацияга жакындатат.",
-        "Негизги маалымат кыска signal-card форматында берилет.",
-        "Desktop жана touch сценарийлери product experience сыяктуу сезилет."
+        "Motion-блоки работают как презентация.",
+        "Информация подается короткими signal-cards.",
+        "Desktop и touch-сценарии ощущаются цельно."
       ]
     }
   },
   en: {
     introGate: {
-      eyebrow: "Motion · UI · Product",
+      eyebrow: "Creative developer · Portfolio story",
       enter: "Enter",
       hint: "Click or Space · Esc to skip"
     },
+    storyRail: { top: "Start", navLabel: "Section navigation" },
     quick: {
       eyebrow: "Quick Scan",
-      title: "Less filler copy, more fast facts about the offer.",
-      description:
-        "A client should understand the format in seconds: what you build, how the work is structured, and how quickly they can start a conversation.",
+      title: "Fast scan instead of long copy.",
+      description: "What I build, how I work and where to message.",
       metrics: {
         services: "Work formats",
         servicesText: "Development, redesign, and presentation-first delivery.",
         projects: "Featured cases",
-        projectsText: "Clear stack, scenario, and business-facing value.",
+        projectsText: "Language, tourism, travel and personal brand.",
         contacts: "Direct channels",
-        contactsText: "Clients can reach out through the path they already use.",
+        contactsText: "Telegram, GitHub and LinkedIn without noise.",
         languages: "Site languages",
-        languagesText: "Presentation prepared for multiple audiences."
+        languagesText: "RU/EN without extra switching noise."
       }
     },
     signal: {
       eyebrow: "Client Signal",
-      title: "The site should answer client questions before the first message.",
-      description:
-        "That is why these interstitial sections are not decorative filler. They show format, value, and output in a faster, more memorable way.",
+      title: "The format should be clear before the first message.",
+      description: "Short signals: format, presentation, process and outcome.",
       boardTitle: "What gets understood fast",
       boardRows: [
         { label: "Format", value: "Mobile product, redesign, or presentation website." },
         { label: "Presentation", value: "Motion and depth build trust instead of noise." },
-        { label: "Process", value: "The work moves in clear steps with readable updates." },
+        { label: "Process", value: "Clear steps with readable updates." },
         { label: "Outcome", value: "Clients see a proposal with shape, not just a screen." }
       ],
       deliverTitle: "What the client gets",
       deliverText:
-        "Each direction is shown as a concrete deliverable rather than an abstract description.",
+        "Each direction becomes a concrete deliverable.",
       memoryTitle: "Why it feels different",
       memoryPoints: [
-        "Animated interstitial blocks make the site feel like a presentation, not a card.",
+        "Motion blocks feel like a presentation.",
         "Useful information is grouped into fast signal blocks instead of a text wall.",
         "Desktop hover and touch interactions feel like part of the product itself."
       ]
@@ -251,6 +201,14 @@ function InlineIcon({ icon, alt }) {
   return <img className="inline-icon" src={source} alt={alt ?? ""} />;
 }
 
+function getProjectDomain(link) {
+  try {
+    return new URL(link).hostname.replace(/^www\./, "");
+  } catch {
+    return link.replace(/^https?:\/\//, "").split("/")[0] || "project";
+  }
+}
+
 function IntroSplitName({ text }) {
   const words = text.trim().split(/\s+/).filter(Boolean);
 
@@ -283,23 +241,34 @@ export default function App() {
   const [activeSection, setActiveSection] = useState("");
   const [experienceArmed, setExperienceArmed] = useState(false);
   const [portraitRevealActive, setPortraitRevealActive] = useState(false);
-  const [portraitSpot, setPortraitSpot] = useState({ x: 50, y: 50 });
   const [heroLandingMode, setHeroLandingMode] = useState(true);
+  const heroLandingScrollRef = useRef(true);
+  const heroSectionRef = useRef(null);
+  const portraitButtonRef = useRef(null);
+  const portraitSpotRef = useRef({ x: 50, y: 50 });
   const [introPhase, setIntroPhase] = useState(() =>
     getInitialReduceMotion() ? "done" : "waiting"
   );
   const [introExitAt, setIntroExitAt] = useState({ x: 50, y: 50 });
-  const [heroDrift, setHeroDrift] = useState({ x: 0, y: 0 });
 
   const content = portfolioContent[language] ?? portfolioContent.ru;
   const rotatingLine = content.hero.rotatingLines[lineIndex % content.hero.rotatingLines.length];
   const telegramHref =
     content.contact.items.find((item) => item.icon === "telegram")?.href ??
     "https://t.me/Adilkan_07";
-  const whatsappHref =
-    content.contact.items.find((item) => item.extra?.href)?.extra?.href ??
-    "https://wa.me/9965599987999";
+  const whatsappHref = content.contact.items.find((item) => item.extra?.href)?.extra?.href;
+  const emailHref = content.contact.items.find((item) => item.icon === "email")?.href;
   const extras = supplementalCopy[language] ?? supplementalCopy.en;
+  const storyRailSections = useMemo(() => {
+    const topLabel = extras.storyRail?.top ?? "Start";
+    return [
+      { id: "top", label: topLabel },
+      ...content.nav.map((item) => ({
+        id: item.href.replace("#", ""),
+        label: item.label
+      }))
+    ];
+  }, [content.nav, extras.storyRail?.top]);
   const portraitHint = isTouchDevice
     ? portraitHintMap[language]?.touch ?? portraitHintMap.en.touch
     : portraitHintMap[language]?.desktop ?? portraitHintMap.en.desktop;
@@ -320,7 +289,7 @@ export default function App() {
       text: extras.quick.metrics.contactsText
     },
     {
-      value: "RU/KY/EN",
+      value: "RU/EN",
       label: extras.quick.metrics.languages,
       text: extras.quick.metrics.languagesText
     }
@@ -329,6 +298,7 @@ export default function App() {
     title: item.title,
     text: item.points[0] ?? item.description
   }));
+  const projectStory = content.projects.story ?? {};
 
   useEffect(() => {
     window.localStorage.setItem("portfolio-language", language);
@@ -385,7 +355,12 @@ export default function App() {
     const syncTouch = (event) => {
       setIsTouchDevice(event.matches);
       setPortraitRevealActive(false);
-      setPortraitSpot({ x: 50, y: 50 });
+      portraitSpotRef.current = { x: 50, y: 50 };
+      const btn = portraitButtonRef.current;
+      if (btn) {
+        btn.style.setProperty("--mask-x", "50%");
+        btn.style.setProperty("--mask-y", "50%");
+      }
     };
 
     if (touchQuery.addEventListener) {
@@ -453,7 +428,10 @@ export default function App() {
           }
         });
       },
-      { threshold: 0.14, rootMargin: "0px 0px -12% 0px" }
+      {
+        threshold: 0,
+        rootMargin: "22% 0px 38% 0px"
+      }
     );
 
     items.forEach((item) => observer.observe(item));
@@ -483,41 +461,101 @@ export default function App() {
   }, [language]);
 
   useEffect(() => {
-    let rafId;
+    const root = document.documentElement;
+    let smoothRaf = 0;
+    let targetProgress = 0;
+    let shownProgress = 0;
 
-    const updateProgress = () => {
-      const root = document.documentElement;
+    const readTargetProgress = () => {
       const scrollHeight = root.scrollHeight - window.innerHeight;
-      const progress = scrollHeight > 0 ? window.scrollY / scrollHeight : 0;
-      root.style.setProperty("--scroll-progress", progress.toFixed(4));
-      rafId = undefined;
+      return scrollHeight > 0 ? window.scrollY / scrollHeight : 0;
     };
 
-    const schedule = () => {
-      if (!rafId) {
-        rafId = window.requestAnimationFrame(updateProgress);
+    const applyProgress = (value) => {
+      root.style.setProperty("--scroll-progress", value.toFixed(4));
+    };
+
+    const snapToScroll = () => {
+      targetProgress = readTargetProgress();
+      shownProgress = targetProgress;
+      applyProgress(shownProgress);
+    };
+
+    const smoothFrame = () => {
+      const delta = targetProgress - shownProgress;
+      if (Math.abs(delta) < 0.0006) {
+        shownProgress = targetProgress;
+        applyProgress(shownProgress);
+        smoothRaf = 0;
+        return;
+      }
+      const step = Math.sign(delta) * Math.min(Math.abs(delta), Math.max(Math.abs(delta) * 0.34, 0.004));
+      shownProgress += step;
+      applyProgress(shownProgress);
+      smoothRaf = window.requestAnimationFrame(smoothFrame);
+    };
+
+    const onScrollOrResize = () => {
+      targetProgress = readTargetProgress();
+      if (reduceMotion) {
+        if (smoothRaf) {
+          window.cancelAnimationFrame(smoothRaf);
+          smoothRaf = 0;
+        }
+        shownProgress = targetProgress;
+        applyProgress(shownProgress);
+        return;
+      }
+      if (!smoothRaf) {
+        smoothRaf = window.requestAnimationFrame(smoothFrame);
       }
     };
 
-    schedule();
-    window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
+    const onResize = () => {
+      if (smoothRaf) {
+        window.cancelAnimationFrame(smoothRaf);
+        smoothRaf = 0;
+      }
+      snapToScroll();
+    };
+
+    snapToScroll();
+    window.addEventListener("scroll", onScrollOrResize, { passive: true });
+    window.addEventListener("resize", onResize);
 
     return () => {
-      window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", schedule);
-      document.documentElement.style.removeProperty("--scroll-progress");
-      if (rafId) {
-        window.cancelAnimationFrame(rafId);
+      window.removeEventListener("scroll", onScrollOrResize);
+      window.removeEventListener("resize", onResize);
+      if (smoothRaf) {
+        window.cancelAnimationFrame(smoothRaf);
       }
+      root.style.removeProperty("--scroll-progress");
     };
-  }, []);
+  }, [reduceMotion]);
 
   useEffect(() => {
     const syncHeroMode = () => {
+      const hero = heroSectionRef.current;
       const viewport = window.innerHeight || 800;
       const threshold = viewport * 0.42;
-      setHeroLandingMode(window.scrollY < threshold);
+      const scrollY = window.scrollY;
+      const next = scrollY < threshold;
+
+      if (hero) {
+        if (reduceMotion) {
+          hero.style.removeProperty("--hero-exit-t");
+        } else if (next) {
+          const t = threshold > 0 ? Math.min(1, scrollY / threshold) : 0;
+          hero.style.setProperty("--hero-exit-t", t.toFixed(4));
+        } else {
+          hero.style.removeProperty("--hero-exit-t");
+        }
+      }
+
+      if (next !== heroLandingScrollRef.current) {
+        heroLandingScrollRef.current = next;
+        setHeroLandingMode(next);
+      }
     };
 
     syncHeroMode();
@@ -528,7 +566,7 @@ export default function App() {
       window.removeEventListener("scroll", syncHeroMode);
       window.removeEventListener("resize", syncHeroMode);
     };
-  }, []);
+  }, [reduceMotion]);
 
   useEffect(() => {
     const cards = document.querySelectorAll(".tilt-card");
@@ -599,26 +637,42 @@ export default function App() {
 
   const handlePortraitPointerMove = (event) => {
     if (isTouchDevice || reduceMotion) return;
-    setPortraitSpot(readPortraitPoint(event));
+    const btn = portraitButtonRef.current;
+    if (!btn) return;
+    const next = readPortraitPoint(event);
+    portraitSpotRef.current = next;
+    btn.style.setProperty("--mask-x", `${next.x}%`);
+    btn.style.setProperty("--mask-y", `${next.y}%`);
     setPortraitRevealActive(true);
   };
 
   const handlePortraitPointerLeave = () => {
     if (isTouchDevice) return;
+    const btn = portraitButtonRef.current;
+    portraitSpotRef.current = { x: 50, y: 50 };
+    if (btn) {
+      btn.style.setProperty("--mask-x", "50%");
+      btn.style.setProperty("--mask-y", "50%");
+    }
     setPortraitRevealActive(false);
-    setPortraitSpot({ x: 50, y: 50 });
   };
 
   const handlePortraitPointerDown = (event) => {
     if (!isTouchDevice) return;
 
     const nextPoint = readPortraitPoint(event);
-    setPortraitSpot(nextPoint);
+    const prev = portraitSpotRef.current;
+    portraitSpotRef.current = nextPoint;
+    const btn = portraitButtonRef.current;
+    if (btn) {
+      btn.style.setProperty("--mask-x", `${nextPoint.x}%`);
+      btn.style.setProperty("--mask-y", `${nextPoint.y}%`);
+    }
     setPortraitRevealActive((current) => {
       if (!current) return true;
 
       const sameZone =
-        Math.abs(nextPoint.x - portraitSpot.x) < 8 && Math.abs(nextPoint.y - portraitSpot.y) < 8;
+        Math.abs(nextPoint.x - prev.x) < 8 && Math.abs(nextPoint.y - prev.y) < 8;
 
       return sameZone ? false : true;
     });
@@ -626,19 +680,24 @@ export default function App() {
 
   const handleHeroPointerMove = (event) => {
     if (reduceMotion || isTouchDevice) return;
+    const root = heroSectionRef.current;
+    if (!root) return;
 
     const rect = event.currentTarget.getBoundingClientRect();
     const normalizedX = (event.clientX - rect.left) / rect.width - 0.5;
     const normalizedY = (event.clientY - rect.top) / rect.height - 0.5;
 
-    setHeroDrift({
-      x: Math.max(-18, Math.min(18, normalizedX * 26)),
-      y: Math.max(-14, Math.min(14, normalizedY * 20))
-    });
+    const x = Math.max(-18, Math.min(18, normalizedX * 26));
+    const y = Math.max(-14, Math.min(14, normalizedY * 20));
+    root.style.setProperty("--hero-drift-x", `${x}px`);
+    root.style.setProperty("--hero-drift-y", `${y}px`);
   };
 
   const handleHeroPointerLeave = () => {
-    setHeroDrift({ x: 0, y: 0 });
+    const root = heroSectionRef.current;
+    if (!root) return;
+    root.style.setProperty("--hero-drift-x", "0px");
+    root.style.setProperty("--hero-drift-y", "0px");
   };
 
   const handleIntroEnterFromPoint = (clientX, clientY) => {
@@ -687,13 +746,17 @@ export default function App() {
     rights: `© ${new Date().getFullYear()} Adilkan Anarbekov`,
     colophon: ""
   };
-  const footerConnectItems = content.contact.items.filter((item) =>
-    ["github", "linkedin", "telegram"].includes(item.icon)
-  );
-  const footerNavItems = content.nav.filter((item) => item.href !== "#projects");
+  const footerConnectOrder = ["telegram", "linkedin", "github"];
+  const footerConnectItems = footerConnectOrder
+    .map((icon) => content.contact.items.find((item) => item.icon === icon))
+    .filter(Boolean);
+  const footerNavItems = content.nav;
 
   return (
-    <div className={`page-shell ${introPhase === "done" ? "is-site-unlocked" : "is-intro-gate"}`}>
+    <div
+      className={`page-shell ${introPhase === "done" ? "is-site-unlocked" : "is-intro-gate"}`}
+      data-active-section={activeSection || "top"}
+    >
       <div
         className={`cinematic-intro ${
           introPhase === "waiting" ? "is-active" : introPhase === "exiting" ? "is-exiting" : "is-finished"
@@ -764,6 +827,13 @@ export default function App() {
       <div className="noise-layer" aria-hidden="true" />
       <div className="scroll-progress-bar" aria-hidden="true" />
 
+      <StoryScrollStage
+        activeSection={activeSection || "top"}
+        reduceMotion={reduceMotion}
+        isTouchDevice={isTouchDevice}
+        visible={introPhase === "done"}
+      />
+
       <header
         className={`site-header ${((heroLandingMode && !menuOpen) || introPhase !== "done") ? "is-hidden" : ""}`}
       >
@@ -790,7 +860,7 @@ export default function App() {
 
           <div className={`header-panel ${menuOpen ? "is-open" : ""}`}>
             <nav className="site-nav" aria-label={content.ui.primaryNavigation}>
-              {content.nav.filter((item) => item.href !== "#projects").map((item) => {
+              {content.nav.map((item) => {
                 const sectionId = item.href.replace("#", "");
 
                 return (
@@ -823,8 +893,17 @@ export default function App() {
 
               <span className="header-time">{time || "--"}</span>
 
-              <a className="header-cta" href="#contact" onClick={() => setMenuOpen(false)}>
-                {content.contact.title}
+              <a
+                className="header-cta header-cta-telegram"
+                href={telegramHref}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => {
+                  setMenuOpen(false);
+                  trackGenerateLead("header_telegram");
+                }}
+              >
+                {content.ui.headerTelegramCta ?? "Telegram"}
               </a>
             </div>
           </div>
@@ -833,14 +912,11 @@ export default function App() {
 
       <main id="main-content">
         <section
+          ref={heroSectionRef}
           className={`hero-section hero-cinematic ${heroLandingMode ? "is-landing" : ""} ${
             introPhase === "done" ? "has-intro-ended" : ""
           }`}
           id="top"
-          style={{
-            "--hero-drift-x": `${heroDrift.x}px`,
-            "--hero-drift-y": `${heroDrift.y}px`
-          }}
           onPointerMove={handleHeroPointerMove}
           onPointerLeave={handleHeroPointerLeave}
         >
@@ -875,11 +951,13 @@ export default function App() {
                   {content.hero.primaryCta}
                 </a>
                 <a
-                  className="button button-secondary"
-                  href={whatsappHref}
+                  className="button button-telegram"
+                  href={telegramHref}
                   target="_blank"
                   rel="noreferrer"
+                  onClick={() => trackGenerateLead("telegram")}
                 >
+                  <InlineIcon icon="telegram" alt="" />
                   {content.hero.secondaryCta}
                 </a>
               </div>
@@ -887,15 +965,13 @@ export default function App() {
 
             <div className="hero-portrait-wrap">
               <button
+                ref={portraitButtonRef}
                 className={`hero-portrait ${portraitRevealActive ? "is-revealed" : ""} ${
                   isTouchDevice ? "is-touch-device" : ""
                 }`}
                 type="button"
                 aria-pressed={portraitRevealActive}
-                style={{
-                  "--mask-x": `${portraitSpot.x}%`,
-                  "--mask-y": `${portraitSpot.y}%`
-                }}
+                style={{ "--mask-x": "50%", "--mask-y": "50%" }}
                 onPointerMove={handlePortraitPointerMove}
                 onPointerLeave={handlePortraitPointerLeave}
                 onPointerDown={handlePortraitPointerDown}
@@ -1116,6 +1192,87 @@ export default function App() {
                         </div>
                       </div>
                     ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="projects-story-section" id="projects">
+          <div className="container projects-story-layout">
+            <aside className="projects-story-sticky" data-reveal>
+              <span className="section-eyebrow">{projectStory.eyebrow ?? "Selected Work"}</span>
+              <h2>{projectStory.title ?? content.projects.title}</h2>
+              <p>{projectStory.description ?? content.projects.description}</p>
+
+              <div className="projects-story-rail" aria-label={projectStory.railTitle ?? content.projects.title}>
+                {(projectStory.rail ?? []).map((step, index) => (
+                  <div className="projects-story-step" key={step.label}>
+                    <span>{step.label ?? `0${index + 1}`}</span>
+                    <p>{step.text}</p>
+                  </div>
+                ))}
+              </div>
+            </aside>
+
+            <div className="projects-story-cards">
+              {content.projects.items.map((project, index) => (
+                <article
+                  className={`project-story-card project-story-card-${index + 1} tilt-card`}
+                  key={project.title}
+                  data-reveal
+                  style={{ "--reveal-delay": `${index * 120}ms` }}
+                >
+                  <div className="project-story-topline">
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    <strong>{project.kind ?? content.projects.previewLabel}</strong>
+                  </div>
+
+                  <div className="project-story-visual" aria-hidden="true">
+                    <div className="project-story-browser">
+                      <span />
+                      <span />
+                      <span />
+                    </div>
+                    <div className="project-story-screen">
+                      <SignalMark icon={project.previewIcon} fallback={`${index + 1}`} />
+                      <span className="project-story-domain">
+                        {project.domain ?? getProjectDomain(project.link)}
+                      </span>
+                      <strong>{project.signal ?? project.title}</strong>
+                    </div>
+                  </div>
+
+                  <div className="project-story-copy">
+                    <p className="project-story-year">{project.year}</p>
+                    <h3>{project.title}</h3>
+                    <p>{project.description}</p>
+
+                    <ul>
+                      {project.bullets.map((point) => (
+                        <li key={point}>{point}</li>
+                      ))}
+                    </ul>
+
+                    <div className="project-story-footer">
+                      <div className="project-story-stack">
+                        {project.stack.map((icon) => (
+                          <span className="project-preview-stack-chip" key={icon}>
+                            <InlineIcon icon={icon} alt={icon} />
+                          </span>
+                        ))}
+                      </div>
+
+                      <a
+                        className="project-story-link"
+                        href={project.link}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {project.linkLabel ?? content.projects.linkLabel}
+                      </a>
+                    </div>
                   </div>
                 </article>
               ))}
@@ -1352,28 +1509,35 @@ export default function App() {
                   <p className="contact-panel-lead">{content.contact.panelText}</p>
                   <div className="contact-actions contact-actions-primary">
                     <a
-                      className="button button-primary"
-                      href={`mailto:${content.contact.items.find((item) => item.icon === "email")?.value ?? "adilkananarbekov751@gmail.com"}`}
-                    >
-                      {content.contact.emailCta}
-                    </a>
-                    <a
-                      className="button button-secondary"
-                      href={whatsappHref}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      {content.contact.whatsappCta}
-                    </a>
-                    <a
-                      className="button button-telegram"
+                      className="button button-telegram is-telegram-main"
                       href={telegramHref}
                       target="_blank"
                       rel="noreferrer"
+                      onClick={() => trackGenerateLead("telegram")}
                     >
                       <InlineIcon icon="telegram" alt="" />
                       {content.contact.telegramCta ?? "Telegram"}
                     </a>
+                    {whatsappHref ? (
+                      <a
+                        className="button button-secondary"
+                        href={whatsappHref}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={() => trackGenerateLead("whatsapp")}
+                      >
+                        {content.contact.whatsappCta}
+                      </a>
+                    ) : null}
+                    {emailHref ? (
+                      <a
+                        className="button button-contact-email"
+                        href={emailHref}
+                        onClick={() => trackGenerateLead("email")}
+                      >
+                        {content.contact.emailCta}
+                      </a>
+                    ) : null}
                   </div>
                 </div>
               </div>
@@ -1392,6 +1556,7 @@ export default function App() {
                       href={item.href}
                       target={item.href.startsWith("http") ? "_blank" : undefined}
                       rel={item.href.startsWith("http") ? "noreferrer" : undefined}
+                      onClick={() => trackGenerateLead(item.icon)}
                     >
                       <span className="contact-icon-wrap">
                         <InlineIcon icon={item.icon} alt={item.label} />
@@ -1448,7 +1613,12 @@ export default function App() {
             <ul className="footer-link-list">
               {footerConnectItems.map((item) => (
                 <li key={item.icon}>
-                  <a href={item.href} target="_blank" rel="noreferrer">
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => trackGenerateLead(`footer_${item.icon}`)}
+                  >
                     <InlineIcon icon={item.icon} alt="" />
                     {item.label}
                   </a>
@@ -1473,6 +1643,7 @@ export default function App() {
           target="_blank"
           rel="noreferrer"
           aria-label={content.ui.telegramFloatTitle}
+          onClick={() => trackGenerateLead("telegram_float")}
         >
           <InlineIcon icon="telegram" alt="Telegram" />
           <span>
@@ -1481,6 +1652,14 @@ export default function App() {
           </span>
         </a>
       ) : null}
+
+      <ScrollStoryRail
+        sections={storyRailSections}
+        activeId={activeSection || "top"}
+        reduceMotion={reduceMotion}
+        visible={introPhase === "done"}
+        ariaLabel={extras.storyRail?.navLabel ?? "Section navigation"}
+      />
     </div>
   );
 }

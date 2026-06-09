@@ -2,6 +2,7 @@
   "name": "react-app",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://adilkan.com",
   "type": "module",
   "scripts": {
     "dev": "vite",

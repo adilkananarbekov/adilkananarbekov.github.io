@@ -12,7 +12,8 @@ export const enPortfolio = {
     themePlain: "Plain",
     themeLight: "Light",
     telegramFloatTitle: "Wanna start work together?",
-    telegramFloatText: "Send a quick Telegram message"
+    telegramFloatText: "Send a quick Telegram message",
+    headerTelegramCta: "Telegram"
   },
   status: {
     availability: "OPEN FOR PROJECTS",
@@ -23,38 +24,38 @@ export const enPortfolio = {
     { href: "#experience", label: "Systems" },
     { href: "#about", label: "About" },
     { href: "#services", label: "Services" },
-    { href: "#projects", label: "Projects" },
+    { href: "#projects", label: "Work" },
     { href: "#ops", label: "Process" },
     { href: "#contact", label: "Contact" }
   ],
   hero: {
-    chip: "Mobile apps, interfaces and expressive digital presentation",
+    chip: "Mobile apps / UI / motion",
     title: "AdilKan Anarbekov",
     subtitle:
-      "I build mobile products and presentation websites that feel clear, polished and confident, with enough motion and personality to show clients the level of execution immediately.",
+      "I build mobile products and websites where visual direction, motion and a clear user path work together.",
     rotatingLines: [
-      "A calm process from first idea to release.",
-      "Interface redesign focused on clarity, trust and usability.",
-      "Motion that supports the story instead of interrupting it."
+      "Kyrgyz learning, tourism, travel, personal brand.",
+      "Interfaces that make people keep scrolling.",
+      "Serious presentation with creative developer character."
     ],
     primaryCta: "Explore services",
-    secondaryCta: "Message on WhatsApp",
+    secondaryCta: "Message on Telegram",
     tags: ["Mobile apps", "UI redesign", "Creative presentation"],
     signalCards: [
       {
         icon: "cellphone",
         title: "Mobile-first pacing",
-        text: "Spacing, CTA rhythm and section flow are tuned for thumb-friendly browsing."
+        text: "CTA rhythm tuned for narrow screens."
       },
       {
         icon: "compass",
         title: "Tap and scroll motion",
-        text: "Cards and controls now respond on touch screens instead of relying on hover only."
+        text: "Cards and controls feel responsive."
       },
       {
         icon: "chat",
         title: "Fast contact path",
-        text: "Animated communication cues make the page feel less static and easier to act on."
+        text: "Direct Telegram-first contact path."
       }
     ],
     marquee: [
@@ -89,9 +90,8 @@ export const enPortfolio = {
   },
   motion: {
     eyebrow: "Creative Direction",
-    title: "The website should demonstrate your range, not just describe it.",
-    description:
-      "This section is designed to show clients that you can handle calm interface animation, richer sales-focused motion, and polished presentation details without turning the experience into noise.",
+    title: "Show the craft instead of explaining it.",
+    description: "Short motion signals: rhythm, depth and focus without long copy.",
     ticker: [
       "Hero motion systems",
       "Soft parallax",
@@ -105,48 +105,41 @@ export const enPortfolio = {
         variant: "flow",
         label: "01 / Direction",
         title: "Directional motion",
-        description:
-          "Animation should help people understand the structure of the page: what matters most, where to look, and what to do next.",
+        description: "Motion guides attention toward the next action.",
         accents: ["Hero reveal", "CTA focus", "Scroll cue"],
         points: [
-          "Soft entrances replace abrupt content swaps and visual jumps.",
-          "Motion is used to guide attention toward meaningful actions.",
-          "Page rhythm comes from contrast in speed, pause and movement density."
+          "Soft entrances replace jumps.",
+          "Accents lead toward the CTA."
         ]
       },
       {
         variant: "orbit",
         label: "02 / Depth",
         title: "Depth and premium feel",
-        description:
-          "A mix of 3D, light, orbiting elements and ambient glow gives the site a more premium feel without becoming chaotic.",
+        description: "Light, 3D and layers create a richer digital scene.",
         accents: ["3D layer", "Depth cues", "Ambient glow"],
         points: [
-          "Parallax and light are used as depth signals, not as decoration for its own sake.",
-          "Different elements move at different speeds, so the screen feels alive.",
-          "Effects reinforce competence and craft instead of stealing focus from the message."
+          "Parallax supports depth.",
+          "Effects do not cover the message."
         ]
       },
       {
         variant: "stack",
         label: "03 / Story",
         title: "Section-based storytelling",
-        description:
-          "Different parts of the page use different motion behaviors: marquee, reveal, hover, pulse and staged content transition, so the site never feels flat.",
+        description: "Each section has a rhythm: marquee, reveal, hover and pulse.",
         accents: ["Marquee band", "Layered cards", "Content swap"],
         points: [
-          "Each section has a distinct motion character while the overall system stays consistent.",
-          "Language changes are staged and softened instead of switching instantly.",
-          "That gives clients the feeling of a deliberate and mature digital presentation."
+          "Different sections, one system.",
+          "The page avoids feeling flat."
         ]
       }
     ]
   },
   experience: {
     eyebrow: "Motion Systems",
-    title: "Less text wall, more cinematic evidence.",
-    description:
-      "Inspired by Awwwards storytelling, Motion hover and tap states, Magic UI orbit and beam patterns, and Lottie-style dashboards. This section recreates those ideas as lightweight native infographics instead of dropping in heavy third-party assets.",
+    title: "Less text. More proof.",
+    description: "Lightweight native visuals replace long explanations.",
     ringLabel: "signal",
     orbitTitle: "Creative stack",
     orbitTags: ["UI", "Motion", "3D", "Data", "Brand", "Launch"],
@@ -156,8 +149,7 @@ export const enPortfolio = {
       {
         label: "Reveal",
         title: "Scroll reveal choreography",
-        description:
-          "Sections enter in layers with signal, timing and directional light so the page feels paced instead of flat.",
+        description: "Sections enter with layers, timing and light.",
         badges: ["Layered intro", "Beam path", "Timed accents"],
         bars: [
           { label: "Narrative", value: 92 },
@@ -169,8 +161,7 @@ export const enPortfolio = {
       {
         label: "Hover",
         title: "Hover depth and focus",
-        description:
-          "Cards lift, tilt and glow only when interaction helps understanding, closer to premium product pages than static cards.",
+        description: "Cards lift and glow only around the useful focus.",
         badges: ["Tilt response", "Magnetic cues", "Glass highlight"],
         bars: [
           { label: "Focus", value: 86 },
@@ -182,8 +173,7 @@ export const enPortfolio = {
       {
         label: "Press",
         title: "Press feedback and action",
-        description:
-          "Buttons and controls react with compression, state changes and active signal so actions feel deliberate instead of decorative.",
+        description: "Buttons respond quickly on touch and click.",
         badges: ["Tap states", "Mode switch", "Active response"],
         bars: [
           { label: "Feedback", value: 90 },
@@ -196,35 +186,27 @@ export const enPortfolio = {
   },
   about: {
     title: "About",
-    description:
-      "I build mobile products and portfolio websites with clear logic, careful interface design and presentation that strengthens trust in the work.",
+    description: "I design interfaces that look confident and work clearly.",
     cards: [
       {
         title: "Who I work with",
-        text:
-          "I work best with small businesses, startup teams and independent specialists who need a new mobile product, a redesign, or a stronger digital presentation of their services.",
         points: [
-          "Service businesses that want a clearer and more modern product experience.",
-          "Teams that want their app or website to look more premium and intentional.",
-          "Clients who care about clarity, polish and steady communication."
+          "Businesses that need a modern product.",
+          "Teams that want a stronger site or app."
         ]
       },
       {
         title: "How I run a project",
-        text:
-          "I keep the work grounded in clear scope, visible progress and decisions based on real user scenarios rather than unnecessary complexity.",
         points: [
-          "Short and readable updates throughout the work.",
-          "Step-by-step delivery with visible outcomes.",
-          "Support after launch and room for future improvements."
+          "Short updates during the work.",
+          "Step-by-step delivery with visible outcomes."
         ]
       }
     ]
   },
   services: {
     title: "Services",
-    description:
-      "Practical services for companies and specialists who need more than a generic layout: a working product with stronger presentation.",
+    description: "Product, redesign and visual presentation.",
     items: [
       {
         icon: "cellphone",
@@ -232,8 +214,7 @@ export const enPortfolio = {
         description:
           "I build clear mobile applications for business, education and internal workflows.",
         points: [
-          "Clean screen structure and a logical user journey.",
-          "Stable behavior on everyday devices.",
+          "Clean screen structure.",
           "Support from concept to first release."
         ]
       },
@@ -243,9 +224,8 @@ export const enPortfolio = {
         description:
           "I update existing apps and websites so they are easier to use, easier to trust and easier to scale.",
         points: [
-          "Simplified navigation and user flows.",
-          "Cleaner visual language and stronger product confidence.",
-          "Modernization without losing the core identity of the brand."
+          "Simpler navigation and flows.",
+          "Stronger product confidence."
         ]
       },
       {
@@ -254,69 +234,123 @@ export const enPortfolio = {
         description:
           "I design presentation websites and interfaces that show the level of your work in the first few seconds.",
         points: [
-          "Motion-driven hero sections, case studies and CTA moments.",
-          "Smooth transitions, layered effects and controlled atmosphere.",
-          "A balance between expression, speed and readability."
+          "Motion for hero, cases and CTA.",
+          "Balance between expression and speed."
         ]
       }
     ]
   },
   projects: {
-    title: "Projects",
+    title: "Work",
     description:
-      "Selected work where practicality, ease of use and stronger product presentation all matter.",
-    linkLabel: "GitHub",
+      "My strongest directions right now: learning, tourism, travel landing pages and personal brand websites.",
+    linkLabel: "Open",
     previewLabel: "Scene",
+    story: {
+      eyebrow: "Selected Work",
+      title: "4 projects. My range.",
+      description:
+        "I do not want the portfolio to feel like a resume. These cases show product thinking, visual presentation and the ability to turn an idea into a site or app.",
+      railTitle: "Storyline",
+      rail: [
+        { label: "01 Learn", text: "Learning through habit and a simple interface." },
+        { label: "02 Travel", text: "Tours and requests without a long path." },
+        { label: "03 Trust", text: "A landing page that explains the service fast." },
+        { label: "04 Brand", text: "A personal website with stronger presence." }
+      ]
+    },
     items: [
       {
-        title: "Home lighting control app",
-        link: "https://github.com/adilkananarbekov",
-        previewIcon: "cellphone",
-        description:
-          "A mobile app for controlling home lighting quickly through a simple phone interface.",
-        bullets: [
-          "Fast connection and responsive control interactions.",
-          "Clear feedback for basic user actions.",
-          "Designed for ordinary users, not only for technical operators."
-        ],
-        stack: ["flutter", "arduino", "bluetooth", "git"]
-      },
-      {
-        title: "Mobile language-learning app",
+        title: "Kyrgyz Learning App",
         link: "https://github.com/adilkananarbekov/learn_kyrgyz",
         previewIcon: "chat",
+        kind: "Learning product",
+        year: "Mobile app",
+        signal: "Language habit",
+        domain: "github.com/learn_kyrgyz",
+        linkLabel: "GitHub",
         description:
-          "A learning product built around regular vocabulary and lesson practice with a simple daily rhythm.",
+          "A mobile learning product for words, lessons and regular Kyrgyz language practice.",
         bullets: [
-          "Login, progress tracking and saved data without extra steps.",
-          "Personal word lists and lesson tracking.",
-          "Focused on consistency and habit rather than interface overload."
+          "Progress, login and saved data without extra steps.",
+          "Designed around a daily habit, not an overloaded course.",
+          "A strong signal of my interest in education products."
         ],
         stack: ["flutter", "firebase", "google", "git"]
+      },
+      {
+        title: "Go Kyrgyzstan Travel",
+        link: "https://kyrgyz.tours",
+        previewIcon: "compass",
+        kind: "Tourism platform",
+        year: "Website + backend",
+        signal: "Tours in Kyrgyzstan",
+        domain: "kyrgyz.tours",
+        linkLabel: "Live",
+        description:
+          "A tourism platform for selling tours in Kyrgyzstan with real presentation, request flows and backend logic.",
+        bullets: [
+          "Tours, real media, request forms and clear route structure.",
+          "Express API, SQLite, admin flow and Telegram notifications.",
+          "The closest case to a full product, not just a landing page."
+        ],
+        stack: ["git", "github", "telegram"]
+      },
+      {
+        title: "Muhlisa Travel",
+        link: "https://muhlisa-travel.github.io/",
+        previewIcon: "compass",
+        kind: "Travel landing",
+        year: "Client-style site",
+        signal: "Fast trust",
+        domain: "muhlisa-travel.github.io",
+        linkLabel: "Live",
+        description:
+          "A travel and visa website where trust, fast contact and clear service explanation matter more than long copy.",
+        bullets: [
+          "The structure leads to contact instead of hiding the main action.",
+          "The visual system can grow into richer storytelling and motion.",
+          "A useful example of a service website for a local business."
+        ],
+        stack: ["git", "github"]
+      },
+      {
+        title: "Sun Almazbek",
+        link: "https://sunalmazbek.com/",
+        previewIcon: "document",
+        kind: "Personal brand",
+        year: "Portfolio site",
+        signal: "Expert presence",
+        domain: "sunalmazbek.com",
+        linkLabel: "Live",
+        description:
+          "A personal website where the goal is not only information, but the feeling of an expert, an offer and a clear next step.",
+        bullets: [
+          "Focused on personal brand, offer and trust in the person.",
+          "The scenario can become stronger with cinematic scroll and motion.",
+          "A useful base for more serious personal presentation."
+        ],
+        stack: ["git", "github"]
       }
     ]
   },
   process: {
     title: "Process",
-    description:
-      "A structure that moves from request to result without chaos, unnecessary loops or unclear scope.",
+    description: "A clear path from request to release.",
     items: [
       {
         title: "Discovery",
-        description:
-          "We start by clarifying goals, audience and the main scenario so the scope is clear from the beginning.",
+        description: "Goals, audience and the main scenario.",
         tags: ["Brief", "Goals", "Priorities"]
       },
       {
         title: "Design and build",
-        description:
-          "I shape the user journey, the visual direction and the product itself with regular updates across the process.",
+        description: "UX, visual direction and working version.",
         tags: ["UX", "Build", "Review"]
       },
       {
         title: "Launch and growth",
-        description:
-          "After release I help with fixes, improvements and the next useful features based on real feedback.",
+        description: "Release, fixes and useful next steps.",
         tags: ["Launch", "Support", "Growth"]
       }
     ],
@@ -337,37 +371,24 @@ export const enPortfolio = {
   },
   contact: {
     title: "Contact",
-    description:
-      "Reach out if you need a mobile product, an interface redesign or a stronger digital presentation for your brand.",
+    description: "Need a product, redesign or stronger digital presentation?",
     panelTitle: "Let’s discuss your project",
-    panelText:
-      "If you have an idea, a prototype, an app or a website that needs stronger visual and technical execution, I can help turn it into a clear and polished solution.",
-    responseHint: "Typical reply within 24 hours · Remote-friendly · Bishkek time (GMT+6)",
+    panelText: "An idea, prototype or site can become a clear project plan quickly.",
+    responseHint:
+      "Fastest on Telegram @Adilkan_07 · Usually within 24h · Remote · Bishkek (GMT+6)",
     emailCta: "Send an email",
     whatsappCta: "WhatsApp",
-    telegramCta: "Telegram",
-    badges: ["Fast reply", "Remote work", "Bishkek, KG"],
+    telegramCta: "Message on Telegram",
+    badges: ["Telegram first", "GitHub", "LinkedIn", "Bishkek, KG"],
     listTitle: "Direct channels",
     listStatus: "verified",
     items: [
       {
-        label: "Phone",
-        value: "+996 559 998 7999",
-        href: "tel:+9965599987999",
-        icon: "phone",
-        motionIcon: "phone",
-        extra: {
-          label: "WhatsApp",
-          value: "WhatsApp",
-          href: "https://wa.me/9965599987999"
-        }
-      },
-      {
-        label: "Email",
-        value: "adilkananarbekov751@gmail.com",
-        href: "mailto:adilkananarbekov751@gmail.com",
-        icon: "email",
-        motionIcon: "email"
+        label: "Telegram",
+        value: "@Adilkan_07",
+        href: "https://t.me/Adilkan_07",
+        icon: "telegram",
+        motionIcon: "chat"
       },
       {
         label: "LinkedIn",
@@ -381,12 +402,6 @@ export const enPortfolio = {
         href: "https://github.com/adilkananarbekov",
         icon: "github",
         motionIcon: "github"
-      },
-      {
-        label: "Telegram",
-        value: "Telegram @Adilkan_07",
-        href: "https://t.me/Adilkan_07",
-        icon: "telegram"
       }
     ]
   },
